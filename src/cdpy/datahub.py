@@ -17,7 +17,9 @@ class CdpyDatahub(CdpSdkBase):
         return self.sdk.call(
             svc='datahub', func='list_clusters', ret_field='clusters', squelch=[
                 Squelch(value='NOT_FOUND', default=list(),
-                        warning='No Datahubs found in Tenant or provided Environment %s' % str(environment_name))
+                        warning='No Datahubs found in Tenant or provided Environment %s' % str(environment_name)),
+                Squelch(value='INVALID_ARGUMENT', default=list(),
+                        warning='Environment not found, %s' % str(environment_name))
             ],
             environmentName=environment_name
         )
